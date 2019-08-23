@@ -1,0 +1,20 @@
+# IDE
+.idea
+.vscode
+
+# Package
+yarn.lock
+node_modules
+
+# Rush
+common/temp/**
+package-deps.json
+
+# Test
+coverage
+
+# Log
+*.log
+
+# OS
+.DS_Store
