@@ -1,0 +1,24 @@
+{
+  "name": "@toolize/script",
+  "version": "0.0.1",
+  "author": "Nojukubi <nojukubi@yokize.com>",
+  "bin": {
+    "tool-script": "./index.js"
+  },
+  "dependencies": {
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.2",
+    "@types/shelljs": "^0.8.5",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-jest": "^22.15.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "shelljs": "^0.8.3",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.3"
+  }
+}

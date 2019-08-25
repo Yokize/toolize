@@ -1,0 +1,29 @@
+# ESLint is pluggable and configurable linter tool for identifying
+# and reporting problematic patterns found in JavaScript code.
+# © ESLint <https://eslint.org>
+---
+# Parser to generate AST.
+parser: '@typescript-eslint/parser'
+
+# Language specification.
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module
+
+# External configuration.
+extends:
+  - plugin:prettier/recommended
+  - plugin:@typescript-eslint/recommended
+
+# Rules configuration.
+rules:
+  '@typescript-eslint/indent': 'off'
+  '@typescript-eslint/no-explicit-any': 'off'
+
+# Override for matched files.
+overrides:
+  - files:
+      - '**/test/**/*.ts'
+
+    extends:
+      - plugin:jest/recommended
