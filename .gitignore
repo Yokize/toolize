@@ -3,8 +3,8 @@
 .vscode
 
 # Package
-yarn.lock
 node_modules
+yarn.lock
 
 # Rush
 common/temp/**
