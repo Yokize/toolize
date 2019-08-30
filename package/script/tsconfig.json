@@ -6,6 +6,7 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
+    "inlineSources": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "newLine": "LF",

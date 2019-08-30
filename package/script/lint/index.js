@@ -5,4 +5,4 @@ const path = require('path');
 const shelljs = require('shelljs');
 
 // Execute linter for all ts files.
-shelljs.exec(`eslint -c ${path.resolve(__dirname, '.eslintrc.yml')} **/*.ts`);
+shelljs.exec(`eslint -c ${path.resolve(__dirname, '.eslintrc.yml')} {lib,test}/**/*.ts`);
