@@ -7,10 +7,10 @@ const pwd = shelljs.pwd().toString();
 // Module name mapper.
 let moduleNameMapper = {};
 
-// Setup files.
+// Setup executed before tests.
 let setupFilesAfterEnv = [];
 
-// Determine whenever tsconfig used for specs.
+// Determine whenever setup used for specs.
 if (shelljs.test('-f', `${pwd}/test/setup.ts`)) {
   setupFilesAfterEnv = ['<rootDir>/test/setup.ts'];
 }
