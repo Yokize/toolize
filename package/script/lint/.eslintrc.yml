@@ -20,6 +20,7 @@ rules:
   '@typescript-eslint/indent': 'off'
   '@typescript-eslint/no-explicit-any': 'off'
   '@typescript-eslint/no-parameter-properties': 'off'
+  '@typescript-eslint/consistent-type-assertions': 'off'
   '@typescript-eslint/no-angle-bracket-type-assertion': 'off'
 
 # Override for matched files.
