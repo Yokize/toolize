@@ -2,7 +2,7 @@
 .idea
 .vscode
 
-# Package
+# NPM
 node_modules
 yarn.lock
 
