@@ -1,14 +1,11 @@
 #!/usr/bin/env node
 const path = require('path');
 
-// ShellJS used to execute commands across OS.
+// Execute across different OS.
 const shelljs = require('shelljs');
 
 // Jest cli configuration.
 const [, , ...args] = process.argv;
 
-// Cli args.
-let cliArgs = args.length ? args.join(' ') : '';
-
 // Execute jest with cli args.
-shelljs.exec(`jest -c ${path.resolve(__dirname, 'jest.config.js')} ${cliArgs}`);
+shelljs.exec(`jest -c ${path.resolve(__dirname, 'jest.config.js')} ${args.length ? args.join(' ') : ''}`);

@@ -4,11 +4,9 @@
 
 # NPM
 node_modules
-yarn.lock
 
 # Rush
 common/temp/**
-package-deps.json
 
 # Test
 coverage

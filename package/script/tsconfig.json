@@ -11,10 +11,6 @@
     "moduleResolution": "node",
     "newLine": "LF",
     "noErrorTruncation": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "target": "es5",
     "sourceMap": true
   }

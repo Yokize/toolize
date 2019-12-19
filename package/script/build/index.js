@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 const path = require('path');
 
-// ShellJS used to execute commands across OS.
+// Execute across different OS.
 const shelljs = require('shelljs');
 
-// Execute TS compiler.
+// Execute typescript compiler.
 shelljs.exec(`tsc -p ${path.resolve(shelljs.pwd().toString(), 'tsconfig.json')}`);

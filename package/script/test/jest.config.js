@@ -1,4 +1,4 @@
-// ShellJS used to execute commands across OS.
+// Execute across different OS.
 const shelljs = require('shelljs');
 
 // Execution pwd.
@@ -10,12 +10,12 @@ let moduleNameMapper = {};
 // Setup executed before tests.
 let setupFilesAfterEnv = [];
 
-// Determine whenever setup used for specs.
+// Determine whether need to setup tests.
 if (shelljs.test('-f', `${pwd}/test/setup.ts`)) {
   setupFilesAfterEnv = ['<rootDir>/test/setup.ts'];
 }
 
-// Determine whenever tsconfig used for specs.
+// Determine whether need to setup typescript.
 if (shelljs.test('-f', `${pwd}/test/tsconfig.json`)) {
   // TS compiler configuration.
   const { compilerOptions } = require(`${pwd}/test/tsconfig.json`);
@@ -29,8 +29,7 @@ if (shelljs.test('-f', `${pwd}/test/tsconfig.json`)) {
   });
 }
 
-// Jest is a delightful JavaScript Testing Framework with a
-// focus on simplicity.
+// Delightful JavaScript Testing Framework with a focus on simplicity.
 // © Jest <https://jestjs.io>
 module.exports = {
   // Root directory to scan for tests and modules.
@@ -67,7 +66,7 @@ module.exports = {
   resetModules: true,
 
   // Patterns to detect test files.
-  testRegex: ['/test/unit/.*\\.ts$'],
+  testRegex: ['/test/(unit|e2e)/.*\\.ts$'],
 
   // Run code to configure or set up the testing framework before each test.
   setupFilesAfterEnv

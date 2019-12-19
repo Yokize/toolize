@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const path = require('path');
 
-// ShellJS used to execute commands across OS.
+// Execute across different OS.
 const shelljs = require('shelljs');
 
 // Execute linter for all ts files.
