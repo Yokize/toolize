@@ -1,8 +1,11 @@
 #!/usr/bin/env node
-const path = require('path');
+const { resolve } = require('path');
 
-// Execute across different OS.
-const shelljs = require('shelljs');
+// Execute across OS.
+const { echo, exec, pwd } = require('shelljs');
+
+// Notify at console.
+echo('Execution: Build');
 
 // Execute typescript compiler.
-shelljs.exec(`tsc -p ${path.resolve(shelljs.pwd().toString(), 'tsconfig.json')}`);
+exec(`tsc -p ${resolve(pwd().toString(), 'tsconfig.json')}`);

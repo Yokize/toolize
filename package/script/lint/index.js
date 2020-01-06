@@ -1,8 +1,11 @@
 #!/usr/bin/env node
-const path = require('path');
+const { resolve } = require('path');
 
-// Execute across different OS.
-const shelljs = require('shelljs');
+// Execute across OS.
+const { echo, exec } = require('shelljs');
+
+// Notify at console.
+echo('Execution: Lint');
 
 // Execute linter for ts files.
-shelljs.exec(`eslint -c ${path.resolve(__dirname, '.eslintrc.yml')} {lib,test}/**/*.ts`);
+exec(`eslint -c ${resolve(__dirname, '.eslintrc.yml')} {lib,test}/**/*.ts`);

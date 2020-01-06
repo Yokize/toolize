@@ -1,8 +1,5 @@
-// Execute across different OS.
-const shelljs = require('shelljs');
-
-// Execution pwd.
-const pwd = shelljs.pwd().toString();
+// Execute across OS.
+const { pwd, test } = require('shelljs');
 
 // Module name mapper.
 let moduleNameMapper = {};
@@ -10,15 +7,18 @@ let moduleNameMapper = {};
 // Setup executed before tests.
 let setupFilesAfterEnv = [];
 
+// Execution working directory.
+const rootDir = pwd().toString();
+
 // Determine whether need to setup tests.
-if (shelljs.test('-f', `${pwd}/test/setup.ts`)) {
+if (test('-f', `${rootDir}/test/setup.ts`)) {
   setupFilesAfterEnv = ['<rootDir>/test/setup.ts'];
 }
 
 // Determine whether need to setup typescript.
-if (shelljs.test('-f', `${pwd}/test/tsconfig.json`)) {
-  // TS compiler configuration.
-  const { compilerOptions } = require(`${pwd}/test/tsconfig.json`);
+if (test('-f', `${rootDir}/test/tsconfig.json`)) {
+  // Ts compiler configuration.
+  const { compilerOptions } = require(`${rootDir}/test/tsconfig.json`);
 
   // Transform the mapping from tsconfig to Jest config format.
   const { pathsToModuleNameMapper } = require('ts-jest/utils');
@@ -33,7 +33,7 @@ if (shelljs.test('-f', `${pwd}/test/tsconfig.json`)) {
 // © Jest <https://jestjs.io>
 module.exports = {
   // Root directory to scan for tests and modules.
-  rootDir: shelljs.pwd().toString(),
+  rootDir,
 
   // Indicates whether the coverage information should
   // be collected while executing the test.
@@ -46,7 +46,6 @@ module.exports = {
   // Global variables available in all test environments.
   globals: {
     'ts-jest': {
-      diagnostics: false,
       // tsConfig used to compile test files.
       tsConfig: '<rootDir>/test/tsconfig.json'
     }

@@ -2,15 +2,15 @@
 # reporting problematic patterns found in JavaScript code.
 # © ESLint <https://eslint.org>
 ---
-# Parser to generate AST.
+# Ts AST.
 parser: '@typescript-eslint/parser'
 
-# Language specification.
+# Language spec.
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
 
-# External configuration.
+# External libs.
 extends:
   - plugin:prettier/recommended
   - plugin:@typescript-eslint/recommended

@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-const path = require('path');
+const { resolve } = require('path');
 
-// Execute across different OS.
-const shelljs = require('shelljs');
+// Execute across OS.
+const { echo, exec } = require('shelljs');
 
-// Script name and cli arguments.
+// Script and cli arguments.
 const [, , script, ...args] = process.argv;
 
-// Script name is mandatory.
-if (!script) throw new Error('Please specify script');
+// Verify whether name is specified.
+if (!script) return echo('Please specify script');
 
-// Execute script using node.
-shelljs.exec(`node ${path.resolve(__dirname, script)} ${args.join(' ')}`);
+// Execute script using the Node.js
+exec(`node ${resolve(__dirname, script)} ${args.join(' ')}`);
