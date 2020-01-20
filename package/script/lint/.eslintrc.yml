@@ -10,7 +10,7 @@ parserOptions:
   ecmaVersion: 2018
   sourceType: module
 
-# External libs.
+# External plugins.
 extends:
   - plugin:prettier/recommended
   - plugin:@typescript-eslint/recommended

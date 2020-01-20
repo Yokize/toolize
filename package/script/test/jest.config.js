@@ -64,9 +64,10 @@ module.exports = {
   // Automatically reset module registry for every test file.
   resetModules: true,
 
-  // Patterns to detect test files.
-  testRegex: ['/test/(unit|e2e)/.*\\.ts$'],
+  // Run code to configure or set up the testing framework
+  // before each test.
+  setupFilesAfterEnv,
 
-  // Run code to configure or set up the testing framework before each test.
-  setupFilesAfterEnv
+  // Patterns to detect test files.
+  testRegex: ['/test/(unit|e2e)/.*\\.ts$']
 };

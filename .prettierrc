@@ -2,11 +2,11 @@
 # it away and reprinting the parsed AST with its own rules.
 # © Prettier <https://prettier.io>
 
-# LF (\n) to apply as end of line.
+# LF at the end of line.
 endOfLine: lf
 
-# The line length used to wrap on.
+# Line length used to wrap on.
 printWidth: 120
 
-# Use single quotes instead of double quotes.
+# Single quotes for string literal.
 singleQuote: true
