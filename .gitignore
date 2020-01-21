@@ -3,6 +3,7 @@
 .vscode
 
 # Rush
+yarn.lock
 common/temp
 
 # NPM

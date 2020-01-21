@@ -4,7 +4,7 @@ const { resolve } = require('path');
 // Execute across OS.
 const { echo, exec } = require('shelljs');
 
-// Script and cli arguments.
+// Script and cli args.
 const [, , script, ...args] = process.argv;
 
 // Verify whether name is specified.
