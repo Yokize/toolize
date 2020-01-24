@@ -3,11 +3,11 @@
 .vscode
 
 # Rush
-yarn.lock
 common/temp
 
 # NPM
 node_modules
+yarn.lock
 
 # Test
 coverage

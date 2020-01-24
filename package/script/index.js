@@ -7,7 +7,7 @@ const { echo, exec } = require('shelljs');
 // Script and cli args.
 const [, , script, ...args] = process.argv;
 
-// Verify whether name is specified.
+// Verify whether name is provided.
 if (!script) return echo('Please specify script');
 
 // Execute script using the Node.js
