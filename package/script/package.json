@@ -1,25 +1,25 @@
 {
   "name": "@toolize/script",
   "version": "0.0.1",
-  "author": "Nojukubi <nojukubi@yokize.com>",
   "license": "MIT",
+  "author": "Nojukubi <nojukubi@yokize.com>",
   "bin": {
     "tool-script": "./index.js"
   },
   "dependencies": {
-    "@types/jest": "^24.9.1",
-    "@types/node": "^13.5.0",
+    "@types/jest": "^25.1.1",
+    "@types/node": "^13.7.0",
     "@types/shelljs": "^0.8.6",
-    "@typescript-eslint/eslint-plugin": "^2.17.0",
-    "@typescript-eslint/parser": "^2.17.0",
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/parser": "^2.19.0",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.9.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-jest": "^23.6.0",
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^25.1.0",
     "prettier": "^1.19.1",
     "shelljs": "^0.8.3",
-    "ts-jest": "^25.0.0",
+    "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"
   }
 }

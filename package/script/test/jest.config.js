@@ -1,10 +1,13 @@
 // Execute across OS.
 const { pwd, test } = require('shelljs');
 
+// Jest preset for ts.
+const { defaults: tsPreset } = require('ts-jest/presets');
+
 // Module name mapper.
 let moduleNameMapper = {};
 
-// Setup executed before tests.
+// Setup before tests.
 let setupFilesAfterEnv = [];
 
 // Execution working directory.
@@ -46,6 +49,10 @@ module.exports = {
   // Global variables available in all test environments.
   globals: {
     'ts-jest': {
+      // Compile files separately.
+      isolatedModules: true,
+      // Package.json used by tsJest.
+      packageJson: '<rootDir>/package.json',
       // tsConfig used to compile test files.
       tsConfig: '<rootDir>/test/tsconfig.json'
     }
@@ -55,18 +62,17 @@ module.exports = {
   // allow to stub out resources.
   moduleNameMapper,
 
-  // Preset used as a base configuration.
-  preset: 'ts-jest',
-
   // Automatically reset mock state between every test.
   resetMocks: true,
 
   // Automatically reset module registry for every test file.
   resetModules: true,
 
-  // Run code to configure or set up the testing framework
-  // before each test.
+  // Run code to configure the testing before each test.
   setupFilesAfterEnv,
+
+  // Synchronous function for transforming source files.
+  transform: tsPreset.transform,
 
   // Patterns to detect test files.
   testRegex: ['/test/(unit|e2e)/.*\\.ts$']
