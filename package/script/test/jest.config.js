@@ -1,27 +1,32 @@
-// Execute across OS.
+// Portable (Windows/Linux/OS X) implementation of Unix shell
+// commands on top of the Node.js API.
 const { pwd, test } = require('shelljs');
 
-// Jest preset for ts.
+// Preset that is used as a base for Jest's configuration. tsJest will take
+// care of .ts and .tsx files only, leaving JavaScript files as-is.
 const { defaults: tsPreset } = require('ts-jest/presets');
-
-// Module name mapper.
-let moduleNameMapper = {};
 
 // Setup before tests.
 let setupFilesAfterEnv = [];
 
+// Module name mapper.
+let moduleNameMapper = {};
+
 // Execution working directory.
 const rootDir = pwd().toString();
 
-// Determine whether need to setup tests.
+// Path to tsconfig.json used for tests.
+const tsConfigPath = `test/tsconfig.json`;
+
+// Verify whether need to setup before tests.
 if (test('-f', `${rootDir}/test/setup.ts`)) {
   setupFilesAfterEnv = ['<rootDir>/test/setup.ts'];
 }
 
-// Determine whether need to setup typescript.
-if (test('-f', `${rootDir}/test/tsconfig.json`)) {
+// Verify whether need to setup typescript mapper.
+if (test('-f', `${rootDir}/${tsConfigPath}`)) {
   // Ts compiler configuration.
-  const { compilerOptions } = require(`${rootDir}/test/tsconfig.json`);
+  const { compilerOptions } = require(`${rootDir}/${tsConfigPath}`);
 
   // Transform the mapping from tsconfig to Jest config format.
   const { pathsToModuleNameMapper } = require('ts-jest/utils');
@@ -48,13 +53,14 @@ module.exports = {
 
   // Global variables available in all test environments.
   globals: {
+    // tsJest configuration.
     'ts-jest': {
       // Compile files separately.
       isolatedModules: true,
-      // Package.json used by tsJest.
-      packageJson: '<rootDir>/package.json',
       // tsConfig used to compile test files.
-      tsConfig: '<rootDir>/test/tsconfig.json'
+      tsConfig: `<rootDir>/${tsConfigPath}`,
+      // Package.json used by tsJest.
+      packageJson: '<rootDir>/package.json'
     }
   },
 

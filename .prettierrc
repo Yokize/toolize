@@ -1,5 +1,6 @@
-# Code formatter which removes all original styling by parsing
-# it away and reprinting the parsed AST with its own rules.
+# Opinionated code formatter which removes all original styling
+# and ensures that all outputted code conforms to a consistent
+# style by reprinting the parsed AST with its own rules.
 # © Prettier <https://prettier.io>
 
 # LF at the end of line.

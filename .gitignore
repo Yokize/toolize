@@ -4,8 +4,6 @@
 
 # Rush
 common/temp
-
-# NPM
 node_modules
 yarn.lock
 
