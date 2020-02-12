@@ -1,34 +1,35 @@
-// Portable (Windows/Linux/OS X) implementation of Unix shell
-// commands on top of the Node.js API.
+// Unix shell commands on top of Node.js API.
 const { pwd, test } = require('shelljs');
 
-// Preset that is used as a base for Jest's configuration. tsJest will take
-// care of .ts and .tsx files only, leaving JavaScript files as-is.
+// Preset used as base for Jest's configuration.
 const { defaults: tsPreset } = require('ts-jest/presets');
-
-// Setup before tests.
-let setupFilesAfterEnv = [];
 
 // Module name mapper.
 let moduleNameMapper = {};
 
+// Setup before tests.
+let setupFilesAfterEnv = [];
+
 // Execution working directory.
 const rootDir = pwd().toString();
 
-// Path to tsconfig.json used for tests.
-const tsConfigPath = `test/tsconfig.json`;
+// Setup file executed before tests.
+const setupFile = 'test/setup.ts';
 
-// Verify whether need to setup before tests.
-if (test('-f', `${rootDir}/test/setup.ts`)) {
-  setupFilesAfterEnv = ['<rootDir>/test/setup.ts'];
+// tsconfig.json used for typescript.
+const tsConfig = 'test/tsconfig.json';
+
+// Verify whether execute setup file before tests.
+if (test('-f', `${rootDir}/${setupFile}`)) {
+  setupFilesAfterEnv = [`<rootDir>/${setupFile}`];
 }
 
 // Verify whether need to setup typescript mapper.
-if (test('-f', `${rootDir}/${tsConfigPath}`)) {
-  // Ts compiler configuration.
-  const { compilerOptions } = require(`${rootDir}/${tsConfigPath}`);
+if (test('-f', `${rootDir}/${tsConfig}`)) {
+  // Typescript compiler options.
+  const { compilerOptions } = require(`${rootDir}/${tsConfig}`);
 
-  // Transform the mapping from tsconfig to Jest config format.
+  // Transformer to Jest config format.
   const { pathsToModuleNameMapper } = require('ts-jest/utils');
 
   // Jest module mapper configuration.
@@ -37,7 +38,7 @@ if (test('-f', `${rootDir}/${tsConfigPath}`)) {
   });
 }
 
-// Delightful JavaScript Testing Framework with a focus on simplicity.
+// Delightful JavaScript Testing Framework with focus on simplicity.
 // © Jest <https://jestjs.io>
 module.exports = {
   // Root directory to scan for tests and modules.
@@ -58,14 +59,14 @@ module.exports = {
       // Compile files separately.
       isolatedModules: true,
       // tsConfig used to compile test files.
-      tsConfig: `<rootDir>/${tsConfigPath}`,
+      tsConfig: `<rootDir>/${tsConfig}`,
       // Package.json used by tsJest.
       packageJson: '<rootDir>/package.json'
     }
   },
 
-  // Map from regular expressions to module names that
-  // allow to stub out resources.
+  // Map from regular expressions to module names that allow
+  // to stub out resources.
   moduleNameMapper,
 
   // Automatically reset mock state between every test.
@@ -74,10 +75,10 @@ module.exports = {
   // Automatically reset module registry for every test file.
   resetModules: true,
 
-  // Run code to configure the testing before each test.
+  // Run code to setup the testing before each test.
   setupFilesAfterEnv,
 
-  // Synchronous function for transforming source files.
+  // Transforming source files.
   transform: tsPreset.transform,
 
   // Patterns to detect test files.

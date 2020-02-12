@@ -1,13 +1,12 @@
 #!/usr/bin/env node
-// The built-in module provides utilities for working with paths.
+// Utilities for working with paths.
 const { resolve } = require('path');
 
-// Portable (Windows/Linux/OS X) implementation of Unix shell
-// commands on top of the Node.js API.
+// Unix shell commands on top of Node.js API.
 const { echo, exec } = require('shelljs');
 
-// Print a message to stdout.
+// Print an informative message to stdout.
 echo('Execution: Lint');
 
-// Execute linter for ts files.
+// Execute linter for typescript files.
 exec(`eslint -c ${resolve(__dirname, '.eslintrc.yml')} {lib,test}/**/*.ts`);

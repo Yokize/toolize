@@ -1,16 +1,14 @@
 #!/usr/bin/env node
-// The built-in module provides utilities for working with paths.
+// Utilities for working with paths.
 const { resolve } = require('path');
 
-// Portable (Windows/Linux/OS X) implementation of Unix shell
-// commands on top of the Node.js API.
-const { exec, echo } = require('shelljs');
+// Unix shell commands on top of Node.js API.
+const { echo, exec } = require('shelljs');
 
-// The process.argv property returns an array containing the command
-// line arguments passed when the Node.js process was launched.
+// Contains arguments passed to the process.
 const [, , ...args] = process.argv;
 
-// Print a message to stdout.
+// Print an informative message to stdout.
 echo('Execution: Test');
 
 // Execute jest with cli args.
