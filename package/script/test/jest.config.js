@@ -16,23 +16,23 @@ const rootDir = pwd().toString();
 // Setup file executed before tests.
 const setupFile = 'test/setup.ts';
 
-// tsconfig.json used for typescript.
+// tsconfig.json used by typescript.
 const tsConfig = 'test/tsconfig.json';
 
-// Verify whether execute setup file before tests.
-if (test('-f', `${rootDir}/${setupFile}`)) {
+// Verify whether need to execute setup file before tests.
+if (test('-f', `${rootDir}/${setupFile}`))
+  // Include file to be executed.
   setupFilesAfterEnv = [`<rootDir>/${setupFile}`];
-}
 
 // Verify whether need to setup typescript mapper.
 if (test('-f', `${rootDir}/${tsConfig}`)) {
   // Typescript compiler options.
   const { compilerOptions } = require(`${rootDir}/${tsConfig}`);
 
-  // Transformer to Jest config format.
+  // Transform ts paths to Jest mapper.
   const { pathsToModuleNameMapper } = require('ts-jest/utils');
 
-  // Jest module mapper configuration.
+  // Jest module mapper with rootDir prefix.
   moduleNameMapper = pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>'
   });
@@ -44,12 +44,11 @@ module.exports = {
   // Root directory to scan for tests and modules.
   rootDir,
 
-  // Indicates whether the coverage information should
-  // be collected while executing the test.
+  // Indicates whether the coverage information should be collected while
+  // executing the tests.
   collectCoverage: true,
 
-  // Patterns to detect files for which coverage information
-  // should be collected.
+  // Patterns to detect files for which coverage information should be collected.
   collectCoverageFrom: ['<rootDir>/lib/**/*.ts'],
 
   // Global variables available in all test environments.
@@ -58,15 +57,14 @@ module.exports = {
     'ts-jest': {
       // Compile files separately.
       isolatedModules: true,
-      // tsConfig used to compile test files.
+      // tsConfig used to compile tests.
       tsConfig: `<rootDir>/${tsConfig}`,
       // Package.json used by tsJest.
       packageJson: '<rootDir>/package.json'
     }
   },
 
-  // Map from regular expressions to module names that allow
-  // to stub out resources.
+  // Module name mapper that allow to stub out resources.
   moduleNameMapper,
 
   // Automatically reset mock state between every test.

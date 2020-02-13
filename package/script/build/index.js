@@ -5,7 +5,7 @@ const { resolve } = require('path');
 // Unix shell commands on top of Node.js API.
 const { echo, exec, pwd, test } = require('shelljs');
 
-// Generate path to tsconfig.json based on working directory.
+// Generate path to tsconfig.json based on the working directory.
 const tsConfigPath = resolve(pwd().toString(), 'tsconfig.json');
 
 // Print an informative message to stdout.
@@ -16,4 +16,4 @@ test('-f', tsConfigPath)
   ? // Execute typescript compiler.
     exec(`tsc -p ${tsConfigPath}`)
   : // Print an error message to stdout.
-    echo('Project directory do not contain tsconfig.json');
+    echo('Project directory does not contain tsconfig.json');

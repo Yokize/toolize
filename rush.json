@@ -1,13 +1,15 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.19.4",
+  "rushVersion": "5.20.0",
   "yarnVersion": "1.22.0",
-  "ensureConsistentVersions": true,
   "projectFolderMaxDepth": 3,
+  "suppressNodeLtsWarning": true,
+  "ensureConsistentVersions": true,
   "projects": [
     {
       "packageName": "@toolize/script",
-      "projectFolder": "package/script"
+      "projectFolder": "package/script",
+      "shouldPublish": true
     }
   ]
 }

@@ -5,7 +5,7 @@ const { resolve } = require('path');
 // Unix shell commands on top of Node.js API.
 const { echo, exec } = require('shelljs');
 
-// Contains arguments passed to the process.
+// Contains the arguments passed to the process.
 const [, , ...args] = process.argv;
 
 // Print an informative message to stdout.
