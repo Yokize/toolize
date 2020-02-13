@@ -9,6 +9,7 @@
     {
       "packageName": "@toolize/script",
       "projectFolder": "package/script",
+      "versionPolicyName": "prerelease",
       "shouldPublish": true
     }
   ]
