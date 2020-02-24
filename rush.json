@@ -12,5 +12,8 @@
       "versionPolicyName": "prerelease",
       "shouldPublish": true
     }
-  ]
+  ],
+  "gitPolicy": {
+    "versionBumpCommitMessage": "Publish package"
+  }
 }
