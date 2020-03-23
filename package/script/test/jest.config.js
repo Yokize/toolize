@@ -1,38 +1,36 @@
-// Unix shell commands on top of Node.js API.
-const { pwd, test } = require('shelljs');
+// Utilities to manipulate paths.
+const { resolve } = require('path');
 
-// Preset used as base for Jest's configuration.
-const { defaults: tsPreset } = require('ts-jest/presets');
+// Unix shell commands on top of Node.js.
+const { pwd, test } = require('shelljs');
 
 // Module name mapper.
 let moduleNameMapper = {};
 
-// Setup before tests.
+// Setting up before testing.
 let setupFilesAfterEnv = [];
 
-// Execution working directory.
-const rootDir = pwd().toString();
+// Path to testing directory.
+const testDir = `${pwd().toString()}/test`;
 
-// Setup file executed before tests.
-const setupFile = 'test/setup.ts';
+// Path to setup file which is executed before testing.
+const setupFile = resolve(testDir, 'setup.ts');
 
-// tsconfig.json used by typescript.
-const tsConfig = 'test/tsconfig.json';
+// Confirm the need to run setup file based on its existence.
+if (test('-f', setupFile)) setupFilesAfterEnv = [setupFile];
 
-// Verify whether need to execute setup file before tests.
-if (test('-f', `${rootDir}/${setupFile}`))
-  // Include file to be executed.
-  setupFilesAfterEnv = [`<rootDir>/${setupFile}`];
+// Path to configs used by the TypeScript compiler.
+const tsConfigPath = resolve(testDir, 'tsconfig.json');
 
-// Verify whether need to setup typescript mapper.
-if (test('-f', `${rootDir}/${tsConfig}`)) {
-  // Typescript compiler options.
-  const { compilerOptions } = require(`${rootDir}/${tsConfig}`);
+// Confirm the need to setup compiler based on configs existence.
+if (test('-f', tsConfigPath)) {
+  // Defined options used by the compiler.
+  const { compilerOptions } = require(tsConfigPath);
 
-  // Transform ts paths to Jest mapper.
+  // Transform TypeScript paths to Jest mapper.
   const { pathsToModuleNameMapper } = require('ts-jest/utils');
 
-  // Jest module mapper with rootDir prefix.
+  // Jest module mapper with the rootDir prefix.
   moduleNameMapper = pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>'
   });
@@ -41,24 +39,22 @@ if (test('-f', `${rootDir}/${tsConfig}`)) {
 // Delightful JavaScript Testing Framework with focus on simplicity.
 // © Jest <https://jestjs.io>
 module.exports = {
-  // Root directory to scan for tests and modules.
-  rootDir,
+  // Root directory to scan tests and modules.
+  rootDir: pwd().toString(),
 
-  // Indicates whether the coverage information should be collected while
-  // executing the tests.
+  // Indicates whether coverage should be collected during testing.
   collectCoverage: true,
 
-  // Patterns to detect files for which coverage information should be collected.
+  // Patterns to detect files for which coverage needs to be collected.
   collectCoverageFrom: ['<rootDir>/lib/**/*.ts'],
 
   // Global variables available in all test environments.
   globals: {
-    // tsJest configuration.
     'ts-jest': {
-      // Compile files separately.
+      // tsConfig used by tsJest.
+      tsConfig: tsConfigPath,
+      // Compile the files separately.
       isolatedModules: true,
-      // tsConfig used to compile tests.
-      tsConfig: `<rootDir>/${tsConfig}`,
       // Package.json used by tsJest.
       packageJson: '<rootDir>/package.json'
     }
@@ -67,18 +63,18 @@ module.exports = {
   // Module name mapper that allow to stub out resources.
   moduleNameMapper,
 
-  // Automatically reset mock state between every test.
+  // Automatically reset mock state between each test.
   resetMocks: true,
 
-  // Automatically reset module registry for every test file.
+  // Automatically reset module registry for each test file.
   resetModules: true,
 
-  // Run code to setup the testing before each test.
+  // Run the code to setup testing before each test.
   setupFilesAfterEnv,
 
-  // Transforming source files.
-  transform: tsPreset.transform,
-
   // Patterns to detect test files.
-  testRegex: ['/test/(unit|e2e)/.*\\.ts$']
+  testRegex: ['/test/(unit|e2e)/.*\\.ts$'],
+
+  // Synchronous function for transforming source files.
+  transform: require('ts-jest/presets').defaults.transform
 };

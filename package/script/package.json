@@ -1,25 +1,36 @@
 {
   "name": "@toolize/script",
-  "version": "0.0.1-rc.2",
+  "version": "0.0.1-rc.3",
   "license": "MIT",
   "author": "Nojukubi <nojukubi@yokize.com>",
   "bin": {
-    "tool-script": "./index.js"
+    "tScript": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yokize/toolize",
+    "directory": "package/script"
   },
   "dependencies": {
+    "@types/benchmark": "^1.0.31",
     "@types/jest": "^25.1.4",
-    "@types/node": "^13.9.0",
-    "@types/shelljs": "^0.8.6",
-    "@typescript-eslint/eslint-plugin": "^2.23.0",
-    "@typescript-eslint/parser": "^2.23.0",
+    "@types/node": "^13.9.5",
+    "@types/shelljs": "^0.8.7",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "benchmark": "^2.1.4",
+    "chalk": "^3.0.0",
+    "globby": "^11.0.0",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "jest": "^25.1.0",
-    "prettier": "^1.19.1",
+    "jest": "^25.2.3",
+    "prettier": "^2.0.2",
     "shelljs": "^0.8.3",
     "ts-jest": "^25.2.1",
+    "ts-node": "^8.8.1",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3"
   }
 }

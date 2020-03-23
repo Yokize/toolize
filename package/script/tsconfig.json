@@ -6,11 +6,10 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "newLine": "LF",
+    "sourceMap": true,
     "target": "es5"
   }
 }
