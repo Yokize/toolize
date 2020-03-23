@@ -1,19 +1,22 @@
 #!/usr/bin/env node
-// Utilities for working with paths.
+// Terminal output style.
+const { red } = require('chalk');
+
+// Utilities to manipulate paths.
 const { resolve } = require('path');
 
-// Unix shell commands on top of Node.js API.
-const { echo, exec, test } = require('shelljs');
+// Unix shell commands on top of Node.js.
+const { echo, test } = require('shelljs');
 
-// Contains the arguments passed to the process.
-const [, , name, ...args] = process.argv;
+// Arguments passed to the Node.js process.
+const [, , name] = process.argv;
 
-// Generate path to script using specified name.
+// Path to the script using given name.
 const script = resolve(__dirname, name, 'index.js');
 
-// Verify whether the script exist.
+// Ensure the existence of the executable script.
 test('-f', script)
-  ? // Execute the script using Node.js.
-    exec(`node ${script} ${args.join(' ')}`)
+  ? // Execute the script using Node.js
+    require(script)
   : // Print an error message to stdout.
-    echo('Please specify the correct script name');
+    echo(red('Please specify the correct script name'));

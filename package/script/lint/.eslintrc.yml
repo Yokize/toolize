@@ -2,7 +2,6 @@
 # reporting problematic patterns found in JavaScript code.
 # © ESLint <https://eslint.org>
 ---
-# Ts AST.
 parser: '@typescript-eslint/parser'
 
 # Language spec.
@@ -10,7 +9,7 @@ parserOptions:
   ecmaVersion: 2018
   sourceType: module
 
-# External plugins.
+# External plugin.
 extends:
   - plugin:prettier/recommended
   - plugin:@typescript-eslint/recommended
@@ -29,7 +28,7 @@ rules:
     - args: after-used
       ignoreRestSiblings: true
 
-# Override for matched files.
+# Override for matching files.
 overrides:
   - files:
       - '*.spec.ts'

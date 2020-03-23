@@ -1,19 +1,18 @@
-#!/usr/bin/env node
-// Utilities for working with paths.
+// Terminal output style.
+const { red } = require('chalk');
+
+// Utilities to manipulate paths.
 const { resolve } = require('path');
 
-// Unix shell commands on top of Node.js API.
+// Unix shell commands on top of Node.js
 const { echo, exec, pwd, test } = require('shelljs');
 
-// Generate path to tsconfig.json based on the working directory.
+// Path to configs based on the working directory.
 const tsConfigPath = resolve(pwd().toString(), 'tsconfig.json');
 
-// Print an informative message to stdout.
-echo('Execution: Build');
-
-// Verify whether tsconfig.json exist.
+// Ensure the existence of the configs file.
 test('-f', tsConfigPath)
-  ? // Execute typescript compiler.
+  ? // Execute the compiler with configs.
     exec(`tsc -p ${tsConfigPath}`)
   : // Print an error message to stdout.
-    echo('Project directory does not contain tsconfig.json');
+    echo(red('The project directory does not contain tsconfig'));

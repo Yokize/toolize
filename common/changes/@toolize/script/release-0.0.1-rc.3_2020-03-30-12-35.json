@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@toolize/script",
+      "comment": "Performance tests",
+      "type": "none"
+    }
+  ],
+  "packageName": "@toolize/script",
+  "email": "nojukubi@yokize.com"
+}
