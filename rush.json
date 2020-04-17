@@ -1,13 +1,10 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.22.0",
+  "rushVersion": "5.23.1",
   "yarnVersion": "1.22.4",
   "projectFolderMaxDepth": 3,
   "suppressNodeLtsWarning": true,
   "ensureConsistentVersions": true,
-  "gitPolicy": {
-    "versionBumpCommitMessage": "Bump package"
-  },
   "repository": {
     "url": "https://github.com/Yokize/toolize"
   },
@@ -15,7 +12,6 @@
     {
       "packageName": "@toolize/script",
       "projectFolder": "package/script",
-      "versionPolicyName": "prerelease",
       "shouldPublish": true
     }
   ]

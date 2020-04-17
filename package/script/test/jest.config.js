@@ -1,36 +1,46 @@
-// Utilities to manipulate paths.
+// Utilities for working with file and directory paths, which
+// depends on the operating system where Node.js is running.
 const { resolve } = require('path');
 
-// Unix shell commands on top of Node.js.
+// Implementation of Unix shell commands on top of Node.js, which
+// eliminates shell script's dependency on Unix while keeping its
+// familiar and powerful commands.
 const { pwd, test } = require('shelljs');
 
-// Module name mapper.
+// A map from regular expressions to module names that allow to stub
+// out resources and support aliases. Modules that are mapped to an
+// alias are unmocked by default, regardless of whether automocking
+// is enabled or not.
 let moduleNameMapper = {};
 
-// Setting up before testing.
+// A list of paths to modules that run code to configure or set up
+// the testing framework before running each test file.
 let setupFilesAfterEnv = [];
 
-// Path to testing directory.
+// The default directory where tests are located based on the current
+// working directory.
 const testDir = `${pwd().toString()}/test`;
 
-// Path to setup file which is executed before testing.
+// The default path to the setup file which will be executed before
+// each test file.
 const setupFile = resolve(testDir, 'setup.ts');
 
-// Confirm the need to run setup file based on its existence.
+// Confirm the need to run the setup file depending on its existence.
 if (test('-f', setupFile)) setupFilesAfterEnv = [setupFile];
 
-// Path to configs used by the TypeScript compiler.
+// Create an absolute path to TypeScript configuration based on the
+// current working directory.
 const tsConfigPath = resolve(testDir, 'tsconfig.json');
 
-// Confirm the need to setup compiler based on configs existence.
+// Confirm the need to setup the compiler depending on configs existence.
 if (test('-f', tsConfigPath)) {
-  // Defined options used by the compiler.
+  // Options defined by the developer and used with the compiler.
   const { compilerOptions } = require(tsConfigPath);
 
-  // Transform TypeScript paths to Jest mapper.
+  // A helper to convert TypeScript aliases to Jest mapper.
   const { pathsToModuleNameMapper } = require('ts-jest/utils');
 
-  // Jest module mapper with the rootDir prefix.
+  // Convert aliases to Jest mapper with the rootDir prefix.
   moduleNameMapper = pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>'
   });
@@ -39,16 +49,16 @@ if (test('-f', tsConfigPath)) {
 // Delightful JavaScript Testing Framework with focus on simplicity.
 // © Jest <https://jestjs.io>
 module.exports = {
-  // Root directory to scan tests and modules.
+  // Root directory to search for tests and modules.
   rootDir: pwd().toString(),
 
-  // Indicates whether coverage should be collected during testing.
+  // Indicates whether the coverage should be collected during the testing.
   collectCoverage: true,
 
   // Patterns to detect files for which coverage needs to be collected.
   collectCoverageFrom: ['<rootDir>/lib/**/*.ts'],
 
-  // Global variables available in all test environments.
+  // Global variables that are available in all test environments.
   globals: {
     'ts-jest': {
       // tsConfig used by tsJest.
@@ -60,7 +70,8 @@ module.exports = {
     }
   },
 
-  // Module name mapper that allow to stub out resources.
+  // Module name mapper that allows to support aliases and
+  // stub out resources.
   moduleNameMapper,
 
   // Automatically reset mock state between each test.
@@ -72,9 +83,9 @@ module.exports = {
   // Run the code to setup testing before each test.
   setupFilesAfterEnv,
 
-  // Patterns to detect test files.
+  // Patterns to detect test files to be executed.
   testRegex: ['/test/(unit|e2e)/.*\\.ts$'],
 
-  // Synchronous function for transforming source files.
+  // Synchronous function for source file transformation.
   transform: require('ts-jest/presets').defaults.transform
 };
