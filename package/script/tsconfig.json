@@ -2,10 +2,10 @@
   "compilerOptions": {
     "alwaysStrict": true,
     "declaration": true,
-    "diagnostics": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
+    "importHelpers": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "newLine": "LF",

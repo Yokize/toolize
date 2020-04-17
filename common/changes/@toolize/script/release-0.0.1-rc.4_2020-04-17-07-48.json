@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@toolize/script",
-      "comment": "Upgrade rush",
+      "comment": "Doc creation",
       "type": "none"
     }
   ],
