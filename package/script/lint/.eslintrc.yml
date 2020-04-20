@@ -4,17 +4,17 @@
 ---
 parser: '@typescript-eslint/parser'
 
-# Language spec.
+# Language.
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
 
-# External plugin.
+# Plugins.
 extends:
   - plugin:prettier/recommended
   - plugin:@typescript-eslint/recommended
 
-# Rules configuration.
+# Rule configs.
 rules:
   '@typescript-eslint/indent': off
   '@typescript-eslint/no-explicit-any': off
@@ -32,9 +32,7 @@ rules:
 overrides:
   - files:
       - '*.spec.ts'
-
     extends:
       - plugin:jest/recommended
-
     rules:
       '@typescript-eslint/ban-ts-ignore': off

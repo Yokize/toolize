@@ -1,58 +1,40 @@
-// Utilities for searching files by pattern.
+// Utility to search for existing paths by comparing the glob-style
+// patterns against directories and files.
 const globby = require('globby');
 
-// Utilities for working with file and directory paths, which
-// depends on the operating system where Node.js is running.
+// Utilities for working with various asynchronous operations in
+// the straight forward approach, similar to `lodash`.
+const each = require('async/each');
+
+// Utilities for working with file and directory paths, which vary
+// depending on the operating system where Node.js is running.
 const { resolve } = require('path');
-
-// Executor and REPL for Node.js. TsNode will resolve the compiler
-// from `cwd` before checking relative to its own installation.
-const tsExecutor = require('ts-node');
-
-// ANSI escape code are standard for in-band signaling to control
-// the colors and other options on text terminals.
-const { red } = require('ansi-colors');
-
-// Load modules at runtime whose location is specified in the path
-// section of tsconfig.json
-const tsLoader = require('tsconfig-paths');
 
 // Implementation of Unix shell commands on top of Node.js, which
 // eliminates shell script's dependency on Unix while keeping its
 // familiar and powerful commands.
-const { echo, pwd, test } = require('shelljs');
+const { echo, pwd } = require('shelljs');
 
-// The default directory where performance tests are located based
-// on the current working directory
+// Utilities to create and verify an absolute path to the configs,
+// find the executable of the module and execute the command.
+const { bin, exec, tsConfig } = require('../exec');
+
+// Create an absolute path to the default directory which contains
+// test specifications. The path created based on the `pwd`.
 const testDir = `${pwd().toString()}/test`;
 
-// Create the path to TypeScript configuration based on the testing
-// directory and use it in context of testing.
-const tsConfigPath = resolve(testDir, 'tsconfig.json');
+// Search for all performance test specifications by pattern, which
+// is located under the default testing directory.
+const perf = globby.sync(resolve(testDir, 'perf', '*.ts'));
 
-// Ensure the existence of TypeScript configuration.
-if (test('-f', tsConfigPath)) {
-  // Load the compiler configuration.
-  const tsConfig = tsLoader.loadConfig(tsConfigPath);
+// Create the command which execute the individual performance test
+// using `ts-node` with support of TypeScript paths.
+const command = (path) => `${bin('ts-node')} -r tsconfig-paths/register\
+  --project ${tsConfig(testDir)} ${path}`;
 
-  // Register the loader as part of Node.js process.
-  tsLoader.register({
-    paths: tsConfig.paths,
-    baseUrl: tsConfig.absoluteBaseUrl
-  });
-
-  // Register the executor as part of Node.js process.
-  tsExecutor.register({ project: tsConfigPath });
-
-  // Find all the performance tests in the testing directory.
-  const files = globby.sync(resolve(testDir, 'perf', '*.ts'));
-
-  // Ensure that at least one performance test is found.
-  files.length
-    ? // Load and launch all tests synchronously.
-      files.forEach(require)
-    : // Inform the developer about the missing tests.
-      echo('There are no performance tests to run');
-}
-// Inform the developer about the missing tsconfig.
-else echo(red('Testing directory does not contain tsconfig.json'));
+// Ensure there is at least one test that can be executed by Node.js
+perf.length
+  ? // Iterate the found tests and execute them sequentially.
+    each(perf, (path, callback) => exec('Performance', command(path), callback))
+  : // Inform the developer about the missing performance tests.
+    echo('There are no performance tests to run');
