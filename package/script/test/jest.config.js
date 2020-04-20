@@ -1,5 +1,5 @@
-// Utilities for working with file and directory paths, which
-// depends on the operating system where Node.js is running.
+// Utilities for working with file and directory paths, which vary
+// depending on the operating system where Node.js is running.
 const { resolve } = require('path');
 
 // Implementation of Unix shell commands on top of Node.js, which
@@ -7,85 +7,93 @@ const { resolve } = require('path');
 // familiar and powerful commands.
 const { pwd, test } = require('shelljs');
 
-// A map from regular expressions to module names that allow to stub
-// out resources and support aliases. Modules that are mapped to an
-// alias are unmocked by default, regardless of whether automocking
-// is enabled or not.
-let moduleNameMapper = {};
+// Utility to transform configured path mapping from TypeScript
+// configs file to the Jest module name mapper format.
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
 
-// A list of paths to modules that run code to configure or set up
-// the testing framework before running each test file.
-let setupFilesAfterEnv = [];
+// Utility to create an absolute path to TypeScript configs file
+// and verify its existence in the specified directory.
+const { tsConfig } = require('../exec');
 
-// The default directory where tests are located based on the current
-// working directory.
-const testDir = `${pwd().toString()}/test`;
+// The directory from which the current process (script) have been
+// started and used to search for other files and configs.
+const rootDir = pwd().toString();
 
-// The default path to the setup file which will be executed before
-// each test file.
-const setupFile = resolve(testDir, 'setup.ts');
+// Create an absolute path to the default directory which contains
+// test specifications. Path created based on the root directory.
+const testDir = `${rootDir}/test`;
 
-// Confirm the need to run the setup file depending on its existence.
-if (test('-f', setupFile)) setupFilesAfterEnv = [setupFile];
+// Create an absolute path to the TypeScript configs file, which is
+// located under the default testing directory. During path creation,
+// the existence of the file will be verified.
+const tsConfigPath = tsConfig(testDir);
 
-// Create an absolute path to TypeScript configuration based on the
-// current working directory.
-const tsConfigPath = resolve(testDir, 'tsconfig.json');
+// Create an absolute path to the environment setup script, which is
+// located under the default testing directory.
+const setupScript = resolve(testDir, 'setup.ts');
 
-// Confirm the need to setup the compiler depending on configs existence.
-if (test('-f', tsConfigPath)) {
-  // Options defined by the developer and used with the compiler.
-  const { compilerOptions } = require(tsConfigPath);
-
-  // A helper to convert TypeScript aliases to Jest mapper.
-  const { pathsToModuleNameMapper } = require('ts-jest/utils');
-
-  // Convert aliases to Jest mapper with the rootDir prefix.
-  moduleNameMapper = pathsToModuleNameMapper(compilerOptions.paths, {
-    prefix: '<rootDir>'
-  });
-}
+// Defined compiler options which are used by `ts-jest' and Jest to
+// support test specifications with Typescript syntax.
+const { compilerOptions } = require(tsConfigPath);
 
 // Delightful JavaScript Testing Framework with focus on simplicity.
 // © Jest <https://jestjs.io>
 module.exports = {
-  // Root directory to search for tests and modules.
-  rootDir: pwd().toString(),
+  // Root directory to search for modules to be tested and test
+  // specifications to be executed.
+  rootDir,
 
-  // Indicates whether the coverage should be collected during the testing.
+  // Indicates whether the test coverage information should be
+  // collected and reported in the output.
   collectCoverage: true,
 
-  // Patterns to detect files for which coverage needs to be collected.
+  // A glob pattern relative to matching the files that coverage
+  // info needs to be collected from.
   collectCoverageFrom: ['<rootDir>/lib/**/*.ts'],
 
-  // Global variables that are available in all test environments.
+  // A set of global variables that should be available in all
+  // test environments and can be used to configure plugins.
   globals: {
     'ts-jest': {
-      // tsConfig used by tsJest.
+      // tsconfig.json used to compile test specifications.
       tsConfig: tsConfigPath,
-      // Compile the files separately.
+      // Compile each file separately without type-checking.
       isolatedModules: true,
-      // Package.json used by tsJest.
+      // package.json used by tsJest to get package metadata.
       packageJson: '<rootDir>/package.json'
     }
   },
 
-  // Module name mapper that allows to support aliases and
-  // stub out resources.
-  moduleNameMapper,
-
-  // Automatically reset mock state between each test.
+  // Automatically reset mock state before every test. Equivalent to
+  // calling jest.resetAllMocks() before each test. This will lead to
+  // any mocks having their fake implementations removed but does not
+  // restore their initial implementation.
   resetMocks: true,
 
-  // Automatically reset module registry for each test file.
+  // Each test file gets its own independent module registry. Enabling
+  // resetModules goes a step further and resets the module registry
+  // before running each individual test. This is useful to isolate
+  // modules for every test so that local module state doesn't conflict
+  // between tests.
   resetModules: true,
 
-  // Run the code to setup testing before each test.
-  setupFilesAfterEnv,
+  // Configuration option to add custom reporters to Jest. A custom
+  // reporter is a class that implements onRunStart, onTestStart,
+  // onTestResult, onRunComplete methods that will be called when any
+  // of those events occurs.
+  reporters: ['jest-standard-reporter'],
 
-  // Patterns to detect test files to be executed.
-  testRegex: ['/test/(unit|e2e)/.*\\.ts$'],
+  // Transformer is a module which provides a synchronous function for
+  // transforming source files and test specifications.
+  transform: require('ts-jest/presets').defaults.transform,
 
-  // Synchronous function for source file transformation.
-  transform: require('ts-jest/presets').defaults.transform
+  // List of paths to modules that run code to configure or set up the
+  // testing framework before each test file in the suite is executed.
+  setupFilesAfterEnv: test('-f', setupScript) ? [setupScript] : [],
+
+  // Map from regular expressions to module names, which allow to stub
+  // out resources or support the aliases.
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths || {}, {
+    prefix: '<rootDir>'
+  })
 };

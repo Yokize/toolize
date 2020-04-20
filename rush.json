@@ -6,7 +6,7 @@
   "suppressNodeLtsWarning": true,
   "ensureConsistentVersions": true,
   "repository": {
-    "url": "https://github.com/Yokize/toolize"
+    "url": "https://github.com/Yokize/toolize.git"
   },
   "projects": [
     {
