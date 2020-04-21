@@ -8,8 +8,8 @@ const { test } = require('shelljs');
 // depending on the operating system where Node.js is running.
 const { resolve } = require('path');
 
-// Utility to immediately stop the running process with a non-zero
-// code and print out the specified message to stdout.
+// Immediately stop the running process with a non-zero code and
+// print out the specified message to stdout.
 const { throwError } = require('./exec');
 
 // The `process.argv` returns an array containing the command line
@@ -17,7 +17,7 @@ const { throwError } = require('./exec');
 const [, , name] = process.argv;
 
 // Create an absolute path to the root file of the script by using
-// the name specified in the process arguments.
+// the name, which specified in the process arguments.
 const script = resolve(__dirname, name, 'index.js');
 
 // Ensure the existence of the script, which is part of the current
