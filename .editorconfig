@@ -7,7 +7,7 @@ root = true
 # Character encoding.
 charset = utf-8
 
-# Line ending (Unix, DOS, Mac)
+# Line ending (Unix, DOS, Mac).
 end_of_line = lf
 
 # Indentation size.

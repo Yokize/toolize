@@ -8,22 +8,22 @@ const { resolve } = require('path');
 const { pwd, test } = require('shelljs');
 
 // Utility to transform configured path mapping from TypeScript
-// configs file to the Jest module name mapper format.
+// configuration to the Jest module name mapper format.
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
 
-// Utility to create an absolute path to TypeScript configs file
+// Utility to create an absolute path to TypeScript configuration
 // and verify its existence in the specified directory.
 const { tsConfig } = require('../exec');
 
 // The directory from which the current process (script) have been
-// started and used to search for other files and configs.
+// started and used to search for other files and configurations.
 const rootDir = pwd().toString();
 
 // Create an absolute path to the default directory which contains
 // test specifications. Path created based on the root directory.
 const testDir = `${rootDir}/test`;
 
-// Create an absolute path to the TypeScript configs file, which is
+// Create an absolute path to the TypeScript configuration, which is
 // located under the default testing directory. During path creation,
 // the existence of the file will be verified.
 const tsConfigPath = tsConfig(testDir);
@@ -64,35 +64,36 @@ module.exports = {
     }
   },
 
-  // Automatically reset mock state before every test. Equivalent to
-  // calling jest.resetAllMocks() before each test. This will lead to
-  // any mocks having their fake implementations removed but does not
-  // restore their initial implementation.
+  // Automatically reset mock state before every test. Equivalent
+  // to calling jest.resetAllMocks() before each test. This will
+  // lead to any mocks having their fake implementations removed
+  // but does not restore their initial implementation.
   resetMocks: true,
 
-  // Each test file gets its own independent module registry. Enabling
-  // resetModules goes a step further and resets the module registry
-  // before running each individual test. This is useful to isolate
-  // modules for every test so that local module state doesn't conflict
-  // between tests.
+  // Each test file gets its own independent module registry.
+  // Enabling resetModules goes a step further and resets the module
+  // registry before running each individual test. This is useful
+  // to isolate modules for every test so that local module state
+  // doesn't conflict between tests.
   resetModules: true,
 
   // Configuration option to add custom reporters to Jest. A custom
   // reporter is a class that implements onRunStart, onTestStart,
-  // onTestResult, onRunComplete methods that will be called when any
-  // of those events occurs.
+  // onTestResult, onRunComplete methods that will be called when
+  // any of those events occurs.
   reporters: ['jest-standard-reporter'],
 
-  // Transformer is a module which provides a synchronous function for
-  // transforming source files and test specifications.
+  // Transformer is a module which provides a synchronous function
+  // for transforming source files and test specifications.
   transform: require('ts-jest/presets').defaults.transform,
 
-  // List of paths to modules that run code to configure or set up the
-  // testing framework before each test file in the suite is executed.
+  // List of paths to modules that run code to configure or set up
+  // the testing framework before each test file in the suite is
+  // executed.
   setupFilesAfterEnv: test('-f', setupScript) ? [setupScript] : [],
 
-  // Map from regular expressions to module names, which allow to stub
-  // out resources or support the aliases.
+  // Map from regular expressions to module names, which allow to
+  // stub out resources or support the aliases.
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths || {}, {
     prefix: '<rootDir>'
   })
