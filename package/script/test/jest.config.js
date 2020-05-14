@@ -23,17 +23,17 @@ const rootDir = pwd().toString();
 // test specifications. Path created based on the root directory.
 const testDir = `${rootDir}/test`;
 
-// Create an absolute path to the TypeScript configuration, which is
-// located under the default testing directory. During path creation,
-// the existence of the file will be verified.
+// Create an absolute path to the TypeScript configuration, which
+// is located under the default testing directory. During path
+// creation, the existence of the file will be verified.
 const tsConfigPath = tsConfig(testDir);
 
-// Create an absolute path to the environment setup script, which is
-// located under the default testing directory.
+// Create an absolute path to the environment setup script, which
+// is located under the default testing directory.
 const setupScript = resolve(testDir, 'setup.ts');
 
-// Defined compiler options which are used by `ts-jest' and Jest to
-// support test specifications with Typescript syntax.
+// Defined compiler options which are used by `ts-jest' and Jest
+// to support test specifications with Typescript syntax.
 const { compilerOptions } = require(tsConfigPath);
 
 // Delightful JavaScript Testing Framework with focus on simplicity.
