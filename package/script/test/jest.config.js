@@ -7,6 +7,10 @@ const { resolve } = require('path');
 // familiar and powerful commands.
 const { pwd, test } = require('shelljs');
 
+// Utilities replicating TypeScript's default behaviour to resolve,
+// read and parse tsconfig.json (support `extends` field).
+const { tsconfigResolverSync } = require('tsconfig-resolver');
+
 // Utility to transform configured path mapping from TypeScript
 // configuration to the Jest module name mapper format.
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
@@ -34,7 +38,7 @@ const setupScript = resolve(testDir, 'setup.ts');
 
 // Defined compiler options which are used by `ts-jest' and Jest
 // to support test specifications with Typescript syntax.
-const { compilerOptions } = require(tsConfigPath);
+const { compilerOptions } = tsconfigResolverSync(tsConfigPath).config;
 
 // Delightful JavaScript Testing Framework with focus on simplicity.
 // © Jest <https://jestjs.io>
