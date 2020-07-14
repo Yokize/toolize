@@ -23,6 +23,7 @@ rules:
   '@typescript-eslint/no-parameter-properties': off
   '@typescript-eslint/consistent-type-assertions': off
   '@typescript-eslint/no-angle-bracket-type-assertion': off
+  '@typescript-eslint/no-use-before-define': off
   '@typescript-eslint/no-unused-vars':
     - error
     - args: after-used
